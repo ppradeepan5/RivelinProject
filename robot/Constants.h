@@ -1,6 +1,6 @@
 #pragma once
 
-//contains all physical dimensions and joint limits of the robot.
+//contains all physical dimensions and joint limits of the robot (degrees for rotational joints, mm for prismatic)
 namespace Constants {
     constexpr double BASE_LINK = 300.0;
     constexpr double PROXIMAL_LINK = 400.0;
@@ -22,5 +22,11 @@ namespace Constants {
     constexpr double P1_MIN = 0.0;
     constexpr double P1_MAX = 50.0;
 
+    constexpr double pi = 3.14159;
+
+    //converts an angle from degrees to radians
+    inline double radconv(double degrees){
+        return degrees * pi / 180.0;
+    }
 
 }

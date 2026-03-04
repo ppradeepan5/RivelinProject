@@ -4,18 +4,12 @@
 
 using namespace Constants;
 
-constexpr double pi = 3.14159;
-
-//converting degrees to radians
-double radconv(double degrees){
-    return degrees * pi / 180.0;
-}
 
 /*Computes cartesian end position from joint configuration
  Treated as a chain (Base -> Proximal -> Distal -> Holder -> Prismatic Extension)
 */
 Position forwardKinematics(const JointState& j){
-    double u1 = radconv(j.U1);
+    double u1 = radconv(j.U1); //converts all rotational joints from degrees to radians
     double u2 = radconv(j.U2);
     double r1 = radconv(j.R1);
     double r2 = radconv(j.R2);

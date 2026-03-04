@@ -1,6 +1,7 @@
 #include "Validation.h"
 #include "Constants.h"
 
+//Validates that each joint value lines within the allowed range - values defined in Constants header fiel.
 bool isWithinLimits(const JointState& j){
     using namespace Constants;
     
