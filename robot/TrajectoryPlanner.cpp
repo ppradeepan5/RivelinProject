@@ -41,13 +41,32 @@ std::vector<JointState> planTrajectory(
     //used to find the maximum time taken
     double maxTime = std::max({ timeU1, timeU2, timeR1, timeR2, timeP1});
 
-    std::cout << "Trajectory time: " << maxTime << "seconds\n";
-    
+    //controller runs at 150Hz meaning 150 updates per sec. Ceil used to round up so we include the final target state
+    int steps = std::ceil(maxTime * 150);
 
-    trajectory.push_back(origin); //adds origin config to trajectory
-    
-    trajectory.push_back(target); //adds target config to trajectory
+    std::cout << "Trajectory time: " << maxTime << " seconds\n";
 
+    //loop through each timestep of trajectory
+    for(int i = 0; i <= steps; i++) {
+
+        //used to interpolate between origin and target joint values
+        double t = (double)i / steps;
+
+        JointState state;
+
+
+        //linearly interpolate each joint value between origin and target
+        state.U1 = origin.U1 + t * diffU1;
+        state.U2 = origin.U2 + t * diffU2;
+        state.R1 = origin.R1 + t * diffR1;
+        state.R2 = origin.R2 + t * diffR2;
+        state.P1 = origin.P1 + t * diffP1;
+
+
+        //store compted joint state into trajectory vector, each element represents one timestamp of the robot motion
+        trajectory.push_back(state);
+    }
+    
     return trajectory; //returns generated trajectory.
 
 }
