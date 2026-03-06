@@ -10,22 +10,22 @@ int main(){
     JointState joints;
 
     //used to verify forward kinematics computation
-    joints.U1 = 45.0;
-    joints.U2 = -90.0;
-    joints.R1 = -90.0;
-    joints.R2 = -90.0;
-    joints.P1 = 60.0;
+    joints.U1 = 0.0;
+    joints.U2 = 0.0;
+    joints.R1 = 0.0;
+    joints.R2 = 0.0;
+    joints.P1 = 0.0;
 
     // check if joint values are within allowed limits
     if(!isWithinLimits(joints)){
         std::cout << "||Unreachable||\n";
-       // return 0;
+       return 0;
     }
 
     //checks if configuration causes a collision
     if(collision(joints)){
         std::cout << "||Collision||\n";
-      //  return 0;
+       return 0;
     }
     
 
@@ -39,14 +39,12 @@ int main(){
     std::cout << "Z: " << pos.z << "mm" << "\n";
 
 
-
     JointState origin = {0, 0, 0 , 0, 0};
     JointState target = {45, -90, -90, -90, 50};
 
-    auto trajectory = planTrajectory(origin, target);
+    auto trajectory = planTrajectory(origin, target); //generates trahectory of intermediate joint states from origin to target
 
-    std::cout << "Trajectory size: " << trajectory.size() << "\n";
-
+    std::cout << "Trajectory size: " << trajectory.size() << "\n"; //prints number of joint states generated including origin and target
     return 0;
 
 

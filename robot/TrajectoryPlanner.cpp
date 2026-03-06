@@ -46,6 +46,9 @@ std::vector<JointState> planTrajectory(
 
     std::cout << "Trajectory time: " << maxTime << " seconds\n";
 
+    //flag used to record if any state along trajectory causes collision
+    bool collisionDetected = false;
+
     //loop through each timestep of trajectory
     for(int i = 0; i <= steps; i++) {
 
@@ -62,9 +65,17 @@ std::vector<JointState> planTrajectory(
         state.R2 = origin.R2 + t * diffR2;
         state.P1 = origin.P1 + t * diffP1;
 
+        if(collision(state)) { //if interpolated joint state causes a colliison, records it but contines generating trajectory
+            collisionDetected = true;
+        }
 
         //store compted joint state into trajectory vector, each element represents one timestamp of the robot motion
         trajectory.push_back(state);
+    }
+
+    //warn user at least one point in trajectory caused a collision
+    if(collisionDetected) {
+        std::cout << "Collision detected\n"; 
     }
     
     return trajectory; //returns generated trajectory.
