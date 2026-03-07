@@ -17,9 +17,7 @@ std::vector<JointState> planTrajectory(
     std::vector<JointState> trajectory;
 
 
-    //validates both inputs to ensure all oints are within their allowed physical limits
     if (!isWithinLimits(origin) || !isWithinLimits(target)) {
-        std::cout << "Unreachable\n";
         return trajectory;
     }
     
@@ -75,7 +73,7 @@ std::vector<JointState> planTrajectory(
 
     //warn user at least one point in trajectory caused a collision
     if(collisionDetected) {
-        std::cout << "Collision detected\n"; 
+        std::cout << "Collision detected at one or more points in trajectory\n"; 
     }
     
     return trajectory; //returns generated trajectory.

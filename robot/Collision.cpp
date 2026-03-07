@@ -28,7 +28,7 @@ bool collision(const JointState& j){
     double z3 = z2 + HOLDER_LINK * sin(ang3);
 
 
-    // collision condition 1: if holder link goes below base height, arm would interesect with robot base
+    //collision condition 1: if holder link goes below base height, arm would interesect with robot base
     if (z3 < BASE_LINK) {
         return true;
     }
