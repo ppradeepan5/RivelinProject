@@ -29,12 +29,17 @@ bool collision(const JointState& j){
 
 
     //collision condition 1: if holder link goes below base height, arm would interesect with robot base
-    if (z3 < BASE_LINK) {
+    if (z1 < BASE_LINK) {
         return true;
     }
 
     //collision condition 2: detects self collision if distal link folds back past proximal link
     if (ang2 < ang1) {
+        return true;
+    }
+
+    //collision condiiton 3: detects if holder folds back past distal link
+    if (ang3 < ang2) {
         return true;
     }
 
