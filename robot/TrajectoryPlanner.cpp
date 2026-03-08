@@ -9,6 +9,25 @@
 
 using namespace Constants;
 
+//switched to a trapezoidal velocity profile for a more realistic trajectory plan
+double moveTime(double dist, double vmax, double acc) {
+    dist = std::abs(dist); //dist moved must always be postiive
+    double t_acc = vmax / acc; //time needed to move from 0 to max v using given max acceleraton
+    double d_acc = 0.5 * acc * t_acc * t_acc; //dist travelled through acceleration phase
+    double d_total_acc = 2 * d_acc; //total dist covererd (acceleration + deacceleration)
+
+    if (dist > d_total_acc) { //case1: distance is large enough to reach max v
+        double d_const = dist - d_total_acc;
+        double t_const = d_const / vmax;
+
+        return 2 * t_acc + t_const;
+    }
+
+    else { //case2: distance is too short to reach max velocity so robot follows a triangular velocity profile instead
+        return 2 * std::sqrt(dist / acc); 
+    }
+}
+
 
 std::vector<JointState> planTrajectory(
     const JointState& origin,
@@ -28,15 +47,15 @@ std::vector<JointState> planTrajectory(
     double diffR2 = target.R2 - origin.R2;
     double diffP1 = target.P1 - origin.P1;
 
-    //calc travel time for each joint using the max speed (time = dist/speed)
-    //abs used since time must be positive
-    double timeU1 = std::abs(diffU1) / 30.0;
-    double timeU2 = std::abs(diffU2) / 30.0;
-    double timeR1 = std::abs(diffR1) / 45.0;
-    double timeR2 = std::abs(diffR2) / 45.0;
-    double timeP1 = std::abs(diffP1) / 10.0;
+    //calc travel time for each joint using trapezoid velocity motion.
+    double timeU1 = moveTime(diffU1, 30.0, 120.0); 
+    double timeU2 = moveTime(diffU2, 30.0, 120.0);
+    double timeR1 = moveTime(diffR1, 45.0, 180.0);
+    double timeR2 = moveTime(diffR2, 45.0, 180.0);
+    double timeP1 = moveTime(diffP1, 10.0, 50.0);
 
-    //used to find the maximum time taken
+
+    //all joint must start and finish at same time so overall trajectory duration is determined by slowest moving joint
     double maxTime = std::max({ timeU1, timeU2, timeR1, timeR2, timeP1});
 
     //controller runs at 150Hz meaning 150 updates per sec. Ceil used to round up so we include the final target state
@@ -54,7 +73,6 @@ std::vector<JointState> planTrajectory(
         double t = (double)i / steps;
 
         JointState state;
-
 
         //linearly interpolate each joint value between origin and target
         state.U1 = origin.U1 + t * diffU1;
