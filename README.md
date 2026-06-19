@@ -58,15 +58,15 @@ Uses **trapezoidal velocity profiles** for each joint.
 
 ## Architecture Overview
 
-robot
- ForwardKinematics.cpp     
- Collision.cpp             
- Validation.cpp            
- TrajectoryPlanner.cpp   
+**robot**
+ForwardKinematics.cpp     
+Collision.cpp             
+Validation.cpp            
+TrajectoryPlanner.cpp   
 
 
-src
- main.cpp                
+**src**
+main.cpp                
 
 
 The system is intentionally modular — each component can be tested, extended, or replaced independently.
