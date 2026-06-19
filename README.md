@@ -1,33 +1,105 @@
-# Robotic Kinematics and Trajectory Planning
+# Robotic Kinematics & Trajectory Planning  
+### *C++ Implementation of a Modular Robotics Motion Planning Pipeline*
 
-C++ Implementation of a robotic arm motion planning system that performs forward kinematics, joint limit validation, collision detection and trajectory generation between joint configurations.
+This project implements a complete **robotics motion planning system** developed as part of a technical challenge.  
+It includes **forward kinematics**, **joint‑space validation**, **self‑collision detection**, and **time‑optimal trajectory generation** for a 5‑DoF articulated robot with mixed joint types (universal, revolute, prismatic).
 
-## This project implements a modular robotics software pipeline consisting of:
-- Forward kinematics for computing end-effector position
-- Joint limit validation
-- Self-collision detection
-- Trajectory planning with trapezoidal velocity profiles
-- 150Hz trajectory sampling for simulated control execution
+The system is written in **modern C++**, with a clean modular architecture designed for clarity, extensibility, and real‑time execution.
 
-The system evaluates whether a target configuration is reachable and warns if collisions occur along the planned path.
+---
 
-## Structure:
-### robot/
-- ForwardKinematics.cpp
-- Collision.cpp
-- Validation.cpp
-- TrajectoryPlanner.cpp
+## 🦾 System Capabilities
 
-### src/
-- main.cpp
+### **1. Forward Kinematics**
+Computes the **3D end‑effector position** in the base frame using the robot’s joint configuration.  
+Implements a full kinematic chain including:
 
-## Build:
-'''bash
+- Universal joint (U1, U2)  
+- Revolute joints (R1, R2)  
+- Prismatic joint (P1)  
+- Proximal, distal, and holder link lengths  
 
+---
+
+### **2. Joint Limit Validation**
+Ensures all joint commands respect:
+
+- Position limits  
+- Maximum velocity  
+- Maximum acceleration  
+
+Validation is performed for both static configurations and full trajectories.
+
+---
+
+### **3. Self‑Collision Detection**
+Detects collisions between:
+
+- Proximal link  
+- Distal link  
+- Holder link  
+- Ground plane (z = 0)  
+
+Links are treated as zero‑thickness line segments for geometric intersection testing.
+
+---
+
+### **4. Time‑Optimal Trajectory Planning**
+Generates the **fastest possible joint‑space trajectory** between two configurations such that:
+
+- All joints start and stop simultaneously  
+- Velocity and acceleration limits are respected  
+- Sampling occurs at **150 Hz** for real‑time streaming  
+- Collisions along the path are detected and reported  
+
+Uses **trapezoidal velocity profiles** for each joint.
+
+---
+
+## 🧠 Architecture Overview
+
+robot/
+│
+├── ForwardKinematics.cpp     # Computes end-effector pose
+├── Collision.cpp             # Self-collision & ground collision checks
+├── Validation.cpp            # Joint limit & feasibility checks
+└── TrajectoryPlanner.cpp     # Time-optimal trajectory generation
+│
+src/
+└── main.cpp                  # CLI interface, test cases, execution pipeline
+
+
+The system is intentionally modular — each component can be tested, extended, or replaced independently.
+
+---
+
+## 🧪 Test Case Handling
+
+The implementation supports all required test cases, including:
+
+- **Reachable configurations**  
+- **Unreachable joint states**  
+- **Self-collision scenarios**  
+- **Ground collisions**  
+- **Bonus edge cases**  
+
+Each test produces clear diagnostic output describing:
+
+- Reachability  
+- Collision type  
+- Trajectory feasibility  
+- End-effector position  
+
+---
+
+## 🛠️ Build & Run
+
+```bash
 mkdir build
-
 cd build
-
 cmake ..
-
 make
+./RivelinProject
+
+
+
