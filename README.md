@@ -58,15 +58,15 @@ Uses **trapezoidal velocity profiles** for each joint.
 
 ## Architecture Overview
 
-robot/
-│
-├── ForwardKinematics.cpp     # Computes end-effector pose
-├── Collision.cpp             # Self-collision & ground collision checks
-├── Validation.cpp            # Joint limit & feasibility checks
-└── TrajectoryPlanner.cpp     # Time-optimal trajectory generation
-│
-src/
-└── main.cpp                  # CLI interface, test cases, execution pipeline
+robot
+ ForwardKinematics.cpp     
+ Collision.cpp             
+ Validation.cpp            
+ TrajectoryPlanner.cpp   
+
+
+src
+ main.cpp                
 
 
 The system is intentionally modular — each component can be tested, extended, or replaced independently.
