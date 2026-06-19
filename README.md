@@ -8,7 +8,7 @@ The system is written in **modern C++**, with a clean modular architecture desig
 
 ---
 
-## 🦾 System Capabilities
+## System Capabilities
 
 ### **1. Forward Kinematics**
 Computes the **3D end‑effector position** in the base frame using the robot’s joint configuration.  
@@ -56,7 +56,7 @@ Uses **trapezoidal velocity profiles** for each joint.
 
 ---
 
-## 🧠 Architecture Overview
+## Architecture Overview
 
 robot/
 │
@@ -73,7 +73,7 @@ The system is intentionally modular — each component can be tested, extended, 
 
 ---
 
-## 🧪 Test Case Handling
+## Test Case Handling
 
 The implementation supports all required test cases, including:
 
@@ -90,9 +90,24 @@ Each test produces clear diagnostic output describing:
 - Trajectory feasibility  
 - End-effector position  
 
+Tests are also fully automated.
+
+<img width="200" height="297" alt="image" src="https://github.com/user-attachments/assets/846f10cd-3c76-474c-9e5a-40649e9763ac" />
+
+<img width="320" height="445" alt="image" src="https://github.com/user-attachments/assets/204dc873-c98b-40cd-b3b4-ae3df24c56de" />
+
+
+
+
+
+
+
+
+
+
 ---
 
-## 🛠️ Build & Run
+## Build & Run
 
 ```bash
 mkdir build
