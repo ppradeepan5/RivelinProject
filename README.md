@@ -1,7 +1,8 @@
 # Robotic Kinematics & Trajectory Planning  
 ### *C++ Implementation of a Modular Robotics Motion Planning Pipeline*
 
-This project implements a complete **robotics motion planning system** developed as part of a technical challenge.  
+This project was developed as a self-directed technical challenge to deepen my understanding of robotics software engineering. Rather than relying on robotics, kinematics, or motion planning libraries, the complete kinematic model, collision detection, and trajectory planning algorithms were implemented from first principles using modern C++ and the underlying mathematical formulations.
+
 It includes **forward kinematics**, **joint‑space validation**, **self‑collision detection**, and **time‑optimal trajectory generation** for a 5‑DoF articulated robot with mixed joint types (universal, revolute, prismatic).
 
 The system is written in **modern C++**, with a clean modular architecture designed for clarity, extensibility, and real‑time execution.
@@ -114,7 +115,7 @@ mkdir build
 cd build
 cmake ..
 make
-./RivelinProject
+./KinematicsProject
 
 
 
